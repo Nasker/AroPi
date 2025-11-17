@@ -1,10 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme for Compose -->
-    <style name="Theme.MyFirstApplication" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.AroPi" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
     
     <!-- Legacy styles for old layout files (not used in Compose app) -->
-    <style name="Theme.MyFirstApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.MyFirstApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.AroPi.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.AroPi.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

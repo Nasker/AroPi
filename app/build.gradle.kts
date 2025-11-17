@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myfirstapplication"
+    namespace = "com.aropi.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.myfirstapplication"
+        applicationId = "com.aropi.app"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
