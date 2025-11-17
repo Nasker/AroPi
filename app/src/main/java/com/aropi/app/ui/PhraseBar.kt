@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
 /**
@@ -29,6 +30,7 @@ import com.aropi.app.model.Pictogram
 @Composable
 fun PhraseBar(
     pictograms: List<Pictogram>,
+    currentLanguage: AppLanguage,
     onClear: () -> Unit,
     onSpeak: () -> Unit,
     onRemovePictogram: (Int) -> Unit,
@@ -70,6 +72,7 @@ fun PhraseBar(
                     itemsIndexed(pictograms) { index, pictogram ->
                         PhraseBarPictogram(
                             pictogram = pictogram,
+                            currentLanguage = currentLanguage,
                             onRemove = { onRemovePictogram(index) }
                         )
                     }
@@ -116,6 +119,7 @@ fun PhraseBar(
 @Composable
 private fun PhraseBarPictogram(
     pictogram: Pictogram,
+    currentLanguage: AppLanguage,
     onRemove: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -135,7 +139,7 @@ private fun PhraseBarPictogram(
             ) {
                 Image(
                     painter = painterResource(id = pictogram.iconRes),
-                    contentDescription = pictogram.label,
+                    contentDescription = pictogram.getLabel(currentLanguage),
                     modifier = Modifier
                         .size(40.dp)
                         .clip(RoundedCornerShape(6.dp))
@@ -144,7 +148,7 @@ private fun PhraseBarPictogram(
                 Spacer(modifier = Modifier.height(4.dp))
                 
                 Text(
-                    text = pictogram.label,
+                    text = pictogram.getLabel(currentLanguage),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,

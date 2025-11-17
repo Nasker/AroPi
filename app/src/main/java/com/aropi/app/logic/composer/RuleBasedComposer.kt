@@ -1,5 +1,6 @@
 package com.aropi.app.logic.composer
 
+import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
 /**
@@ -7,7 +8,7 @@ import com.aropi.app.model.Pictogram
  * Used as a fallback when no mock phrase is available.
  */
 class RuleBasedComposer : PhraseComposer {
-    override fun compose(pictograms: List<Pictogram>): String {
-        return pictograms.joinToString(" ") { it.label }
+    override fun compose(pictograms: List<Pictogram>, language: AppLanguage): String {
+        return pictograms.joinToString(" ") { it.getLabel(language) }
     }
 }

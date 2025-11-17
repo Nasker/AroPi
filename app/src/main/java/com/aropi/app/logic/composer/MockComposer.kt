@@ -1,5 +1,6 @@
 package com.aropi.app.logic.composer
 
+import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
 /**
@@ -16,14 +17,14 @@ class MockComposer(private val fallback: PhraseComposer = RuleBasedComposer()) :
         listOf("yo", "comer", "manzana") to "Yo como una manzana",
         
         // Catalan examples
-        listOf("jo", "voler", "galeta") to "Jo vull una galeta",
-        listOf("nena", "menjar", "poma") to "La nena menja una poma"
+        listOf("yo", "querer", "galleta") to "Jo vull una galeta",
+        listOf("niña", "comer", "manzana") to "La nena menja una poma"
     )
     
-    override fun compose(pictograms: List<Pictogram>): String {
+    override fun compose(pictograms: List<Pictogram>, language: AppLanguage): String {
         if (pictograms.isEmpty()) return ""
         
         val key = pictograms.map { it.id }
-        return mockPhrases[key] ?: fallback.compose(pictograms)
+        return mockPhrases[key] ?: fallback.compose(pictograms, language)
     }
 }

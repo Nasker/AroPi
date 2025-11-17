@@ -1,0 +1,249 @@
+package com.aropi.app.ui
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.aropi.app.logic.SettingsManager
+import com.aropi.app.model.AppLanguage
+import com.aropi.app.model.AppSettings
+
+/**
+ * Settings screen for configuring app preferences.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(
+    settingsManager: SettingsManager,
+    onNavigateBack: () -> Unit
+) {
+    val settings by settingsManager.settings.collectAsState()
+    
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Configuración") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Volver"
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            // Language Section
+            SettingsSection(title = "Idioma") {
+                LanguageSelector(
+                    currentLanguage = settings.language,
+                    onLanguageChange = { settingsManager.updateLanguage(it) }
+                )
+            }
+            
+            // Speech Settings Section
+            SettingsSection(title = "Voz") {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    // Auto-speak toggle
+                    SettingSwitch(
+                        title = "Reproducir al tocar",
+                        description = "Reproduce la palabra al seleccionar un pictograma",
+                        checked = settings.autoSpeak,
+                        onCheckedChange = { settingsManager.updateAutoSpeak(it) }
+                    )
+                    
+                    // Speech rate slider
+                    SettingSlider(
+                        title = "Velocidad de voz",
+                        value = settings.speechRate,
+                        valueRange = 0.5f..2.0f,
+                        onValueChange = { settingsManager.updateSpeechRate(it) },
+                        valueLabel = { String.format("%.1fx", it) }
+                    )
+                    
+                    // Speech pitch slider
+                    SettingSlider(
+                        title = "Tono de voz",
+                        value = settings.speechPitch,
+                        valueRange = 0.5f..2.0f,
+                        onValueChange = { settingsManager.updateSpeechPitch(it) },
+                        valueLabel = { String.format("%.1fx", it) }
+                    )
+                }
+            }
+            
+            // Display Settings Section
+            SettingsSection(title = "Visualización") {
+                SettingSwitch(
+                    title = "Mostrar etiquetas",
+                    description = "Muestra el texto debajo de los pictogramas",
+                    checked = settings.showLabels,
+                    onCheckedChange = { settingsManager.updateShowLabels(it) }
+                )
+            }
+            
+            // App Info
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "AroPi",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        text = "Versión 1.0",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        text = "Creado con amor para Aroa 💝",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingsSection(
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        ) {
+            Box(modifier = Modifier.padding(16.dp)) {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+private fun LanguageSelector(
+    currentLanguage: AppLanguage,
+    onLanguageChange: (AppLanguage) -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        AppLanguage.values().forEach { language ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = currentLanguage == language,
+                    onClick = { onLanguageChange(language) }
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = language.displayName,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingSwitch(
+    title: String,
+    description: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange
+        )
+    }
+}
+
+@Composable
+private fun SettingSlider(
+    title: String,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: (Float) -> Unit,
+    valueLabel: (Float) -> String
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Text(
+                text = valueLabel(value),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = valueRange,
+            steps = 5
+        )
+    }
+}

@@ -1,5 +1,6 @@
 package com.aropi.app.logic.composer
 
+import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
 /**
@@ -7,5 +8,5 @@ import com.aropi.app.model.Pictogram
  * This abstraction allows for different implementations (mock, rule-based, LLM).
  */
 interface PhraseComposer {
-    fun compose(pictograms: List<Pictogram>): String
+    fun compose(pictograms: List<Pictogram>, language: AppLanguage = AppLanguage.SPANISH): String
 }

@@ -45,7 +45,7 @@ class TTSManager(context: Context) {
         })
     }
     
-    fun speak(text: String, locale: Locale = SPANISH) {
+    fun speak(text: String, locale: Locale = SPANISH, rate: Float = 1.0f, pitch: Float = 1.0f) {
         if (!isInitialized) {
             Log.w(TAG, "TTS not initialized yet")
             return
@@ -53,6 +53,8 @@ class TTSManager(context: Context) {
         
         tts?.apply {
             language = locale
+            setSpeechRate(rate)
+            setPitch(pitch)
             speak(text, TextToSpeech.QUEUE_FLUSH, null, "AAC_UTTERANCE")
         }
     }

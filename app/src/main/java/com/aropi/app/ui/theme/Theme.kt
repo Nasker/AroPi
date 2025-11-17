@@ -10,31 +10,46 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// Light theme colors - bright and child-friendly
+// Kid-friendly light theme - warm, cozy, playful colors
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF6750A4),
+    // Warm coral/peach primary - friendly and inviting
+    primary = Color(0xFFFF6B6B),
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFE8DEF8),
-    onPrimaryContainer = Color(0xFF21005E),
-    secondary = Color(0xFF625B71),
+    primaryContainer = Color(0xFFFFE5E5),
+    onPrimaryContainer = Color(0xFF8B2020),
+    
+    // Soft sky blue secondary - calming and cheerful
+    secondary = Color(0xFF4ECDC4),
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFE8DEF8),
-    onSecondaryContainer = Color(0xFF1E192B),
-    tertiary = Color(0xFF7D5260),
-    onTertiary = Color.White,
-    tertiaryContainer = Color(0xFFFFD8E4),
-    onTertiaryContainer = Color(0xFF370B1E),
-    error = Color(0xFFB3261E),
+    secondaryContainer = Color(0xFFD4F4F2),
+    onSecondaryContainer = Color(0xFF1A5551),
+    
+    // Sunny yellow tertiary - bright and happy
+    tertiary = Color(0xFFFFD93D),
+    onTertiary = Color(0xFF3D3D00),
+    tertiaryContainer = Color(0xFFFFF8DC),
+    onTertiaryContainer = Color(0xFF6B5E00),
+    
+    // Gentle error colors
+    error = Color(0xFFE74C3C),
     onError = Color.White,
-    errorContainer = Color(0xFFF9DEDC),
-    onErrorContainer = Color(0xFF410E0B),
-    background = Color(0xFFFFFBFE),
-    onBackground = Color(0xFF1C1B1F),
-    surface = Color(0xFFFFFBFE),
-    onSurface = Color(0xFF1C1B1F),
-    surfaceVariant = Color(0xFFE7E0EC),
-    onSurfaceVariant = Color(0xFF49454E),
-    outline = Color(0xFF79747E)
+    errorContainer = Color(0xFFFFEBEE),
+    onErrorContainer = Color(0xFF8B1A1A),
+    
+    // Soft cream background - easy on the eyes
+    background = Color(0xFFFFFDF7),
+    onBackground = Color(0xFF2D2D2D),
+    
+    // Clean white surfaces with warmth
+    surface = Color(0xFFFFFFFE),
+    onSurface = Color(0xFF2D2D2D),
+    
+    // Soft lavender variant - gentle contrast
+    surfaceVariant = Color(0xFFF5F0FF),
+    onSurfaceVariant = Color(0xFF5A5A5A),
+    
+    // Soft outline
+    outline = Color(0xFFBDBDBD)
 )
 
 // Dark theme colors
@@ -66,17 +81,19 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun AropiTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false, // Always use light theme for kids
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    // Always use light color scheme for kid-friendly experience
+    val colorScheme = LightColorScheme
     
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            window.statusBarColor = colorScheme.primaryContainer.toArgb()
+            // Always use light status bar icons for better visibility
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
     

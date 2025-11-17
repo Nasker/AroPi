@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
 /**
@@ -31,6 +32,8 @@ import com.aropi.app.model.Pictogram
 @Composable
 fun PictogramGrid(
     pictograms: List<Pictogram>,
+    currentLanguage: AppLanguage,
+    showLabels: Boolean,
     onPictogramClick: (Pictogram) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -44,6 +47,8 @@ fun PictogramGrid(
         items(pictograms) { pictogram ->
             PictogramCard(
                 pictogram = pictogram,
+                currentLanguage = currentLanguage,
+                showLabel = showLabels,
                 onClick = { onPictogramClick(pictogram) }
             )
         }
@@ -53,6 +58,8 @@ fun PictogramGrid(
 @Composable
 private fun PictogramCard(
     pictogram: Pictogram,
+    currentLanguage: AppLanguage,
+    showLabel: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -75,22 +82,24 @@ private fun PictogramCard(
         ) {
             Image(
                 painter = painterResource(id = pictogram.iconRes),
-                contentDescription = pictogram.label,
+                contentDescription = pictogram.getLabel(currentLanguage),
                 modifier = Modifier
                     .size(64.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
             
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = pictogram.label,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                maxLines = 2
-            )
+            if (showLabel) {
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Text(
+                    text = pictogram.getLabel(currentLanguage),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    maxLines = 2
+                )
+            }
         }
     }
 }
