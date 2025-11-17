@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.aropi.app.logic.PhraseManager
 import com.aropi.app.logic.SettingsManager
@@ -65,7 +66,8 @@ fun MainScreen(
                     title = { 
                         Text(
                             "AroPi",
-                            style = MaterialTheme.typography.headlineMedium
+                            style = MaterialTheme.typography.headlineMedium,
+                            textAlign = TextAlign.Center
                         ) 
                     },
                     actions = {
@@ -101,7 +103,8 @@ fun MainScreen(
                             pictogram.getLabel(settings.language),
                             settings.language.locale,
                             settings.speechRate,
-                            settings.speechPitch
+                            settings.speechPitch,
+                            settings.volumeBoost
                         )
                     }
                 },
@@ -119,7 +122,8 @@ fun MainScreen(
                         sentence,
                         settings.language.locale,
                         settings.speechRate,
-                        settings.speechPitch
+                        settings.speechPitch,
+                        settings.volumeBoost
                     )
                 },
                 onRemovePictogram = { index ->

@@ -10,7 +10,8 @@ data class AppSettings(
     val speechRate: Float = 1.0f,
     val speechPitch: Float = 1.0f,
     val autoSpeak: Boolean = true,
-    val showLabels: Boolean = true
+    val showLabels: Boolean = true,
+    val volumeBoost: Boolean = false  // Boost media volume when speaking
 )
 
 /**

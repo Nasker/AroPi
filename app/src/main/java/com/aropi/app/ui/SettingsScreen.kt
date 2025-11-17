@@ -88,6 +88,14 @@ fun SettingsScreen(
                         onValueChange = { settingsManager.updateSpeechPitch(it) },
                         valueLabel = { String.format("%.1fx", it) }
                     )
+                    
+                    // Volume boost toggle
+                    SettingSwitch(
+                        title = "Aumentar volumen",
+                        description = "Sube el volumen automáticamente al hablar",
+                        checked = settings.volumeBoost,
+                        onCheckedChange = { settingsManager.updateVolumeBoost(it) }
+                    )
                 }
             }
             

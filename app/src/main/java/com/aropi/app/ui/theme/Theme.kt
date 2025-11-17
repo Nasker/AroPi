@@ -15,19 +15,19 @@ private val LightColorScheme = lightColorScheme(
     // Warm coral/peach primary - friendly and inviting
     primary = Color(0xFFFF6B6B),
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFFFE5E5),
+    primaryContainer = Color(0xFFFCF5C7),
     onPrimaryContainer = Color(0xFF8B2020),
     
     // Soft sky blue secondary - calming and cheerful
     secondary = Color(0xFF4ECDC4),
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFD4F4F2),
+    secondaryContainer = Color(0xFFFCF5C7),
     onSecondaryContainer = Color(0xFF1A5551),
     
     // Sunny yellow tertiary - bright and happy
     tertiary = Color(0xFFFFD93D),
     onTertiary = Color(0xFF3D3D00),
-    tertiaryContainer = Color(0xFFFFF8DC),
+    tertiaryContainer = Color(0xFFFCF5C7),
     onTertiaryContainer = Color(0xFF6B5E00),
     
     // Gentle error colors

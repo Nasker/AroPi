@@ -89,7 +89,7 @@ private fun PictogramCard(
             )
             
             if (showLabel) {
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 
                 Text(
                     text = pictogram.getLabel(currentLanguage),

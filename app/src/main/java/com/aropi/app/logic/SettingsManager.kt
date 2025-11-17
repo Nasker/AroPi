@@ -24,6 +24,7 @@ class SettingsManager(context: Context) {
         private const val KEY_SPEECH_PITCH = "speech_pitch"
         private const val KEY_AUTO_SPEAK = "auto_speak"
         private const val KEY_SHOW_LABELS = "show_labels"
+        private const val KEY_VOLUME_BOOST = "volume_boost"
     }
     
     private fun loadSettings(): AppSettings {
@@ -35,7 +36,8 @@ class SettingsManager(context: Context) {
             speechRate = prefs.getFloat(KEY_SPEECH_RATE, 1.0f),
             speechPitch = prefs.getFloat(KEY_SPEECH_PITCH, 1.0f),
             autoSpeak = prefs.getBoolean(KEY_AUTO_SPEAK, true),
-            showLabels = prefs.getBoolean(KEY_SHOW_LABELS, true)
+            showLabels = prefs.getBoolean(KEY_SHOW_LABELS, true),
+            volumeBoost = prefs.getBoolean(KEY_VOLUME_BOOST, false)
         )
     }
     
@@ -46,6 +48,7 @@ class SettingsManager(context: Context) {
             putFloat(KEY_SPEECH_PITCH, settings.speechPitch)
             putBoolean(KEY_AUTO_SPEAK, settings.autoSpeak)
             putBoolean(KEY_SHOW_LABELS, settings.showLabels)
+            putBoolean(KEY_VOLUME_BOOST, settings.volumeBoost)
             apply()
         }
         _settings.value = settings
@@ -69,5 +72,9 @@ class SettingsManager(context: Context) {
     
     fun updateShowLabels(enabled: Boolean) {
         updateSettings(_settings.value.copy(showLabels = enabled))
+    }
+    
+    fun updateVolumeBoost(enabled: Boolean) {
+        updateSettings(_settings.value.copy(volumeBoost = enabled))
     }
 }
