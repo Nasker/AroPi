@@ -1,0 +1,221 @@
+{
+  "categories": {
+    "subjects": [
+      {
+        "id": "yo",
+        "labels": {
+          "SPANISH": "yo",
+          "CATALAN": "jo"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "pronoun"
+      },
+      {
+        "id": "tu",
+        "labels": {
+          "SPANISH": "tú",
+          "CATALAN": "tu"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "pronoun"
+      },
+      {
+        "id": "niña",
+        "labels": {
+          "SPANISH": "niña",
+          "CATALAN": "nena"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "niño",
+        "labels": {
+          "SPANISH": "niño",
+          "CATALAN": "nen"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "mama",
+        "labels": {
+          "SPANISH": "mamá",
+          "CATALAN": "mare"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "papa",
+        "labels": {
+          "SPANISH": "papá",
+          "CATALAN": "pare"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      }
+    ],
+    "actions": [
+      {
+        "id": "querer",
+        "labels": {
+          "SPANISH": "querer",
+          "CATALAN": "voler"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "verb"
+      },
+      {
+        "id": "comer",
+        "labels": {
+          "SPANISH": "comer",
+          "CATALAN": "menjar"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "verb"
+      },
+      {
+        "id": "beber",
+        "labels": {
+          "SPANISH": "beber",
+          "CATALAN": "beure"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "verb"
+      },
+      {
+        "id": "jugar",
+        "labels": {
+          "SPANISH": "jugar",
+          "CATALAN": "jugar"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "verb"
+      },
+      {
+        "id": "dormir",
+        "labels": {
+          "SPANISH": "dormir",
+          "CATALAN": "dormir"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "verb"
+      },
+      {
+        "id": "ir",
+        "labels": {
+          "SPANISH": "ir",
+          "CATALAN": "anar"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "verb"
+      }
+    ],
+    "objects": [
+      {
+        "id": "galleta",
+        "labels": {
+          "SPANISH": "galleta",
+          "CATALAN": "galeta"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "manzana",
+        "labels": {
+          "SPANISH": "manzana",
+          "CATALAN": "poma"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "agua",
+        "labels": {
+          "SPANISH": "agua",
+          "CATALAN": "aigua"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "leche",
+        "labels": {
+          "SPANISH": "leche",
+          "CATALAN": "llet"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "pan",
+        "labels": {
+          "SPANISH": "pan",
+          "CATALAN": "pa"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      }
+    ],
+    "places": [
+      {
+        "id": "casa",
+        "labels": {
+          "SPANISH": "casa",
+          "CATALAN": "casa"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "escuela",
+        "labels": {
+          "SPANISH": "escuela",
+          "CATALAN": "escola"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      },
+      {
+        "id": "parque",
+        "labels": {
+          "SPANISH": "parque",
+          "CATALAN": "parc"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "noun"
+      }
+    ],
+    "feelings": [
+      {
+        "id": "feliz",
+        "labels": {
+          "SPANISH": "feliz",
+          "CATALAN": "feliç"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "adjective"
+      },
+      {
+        "id": "triste",
+        "labels": {
+          "SPANISH": "triste",
+          "CATALAN": "trist"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "adjective"
+      },
+      {
+        "id": "cansado",
+        "labels": {
+          "SPANISH": "cansado",
+          "CATALAN": "cansat"
+        },
+        "iconRes": 2131165314,
+        "grammarType": "adjective"
+      }
+    ]
+  }
+}

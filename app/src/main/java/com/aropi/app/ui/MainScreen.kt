@@ -14,7 +14,9 @@ import com.aropi.app.logic.SettingsManager
 import com.aropi.app.logic.TTSManager
 import com.aropi.app.logic.composer.MockComposer
 import com.aropi.app.logic.composer.PhraseComposer
+import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
+import com.aropi.app.model.PictogramCatalog
 import com.aropi.app.R
 
 /**
@@ -36,16 +38,9 @@ fun MainScreen(
     
     var showSettings by remember { mutableStateOf(false) }
     
-    // Sample pictograms for PoC with bilingual labels
-    val availablePictograms = remember {
-        listOf(
-            Pictogram("yo", "yo", "jo", R.drawable.ic_pictogram_placeholder),
-            Pictogram("querer", "querer", "voler", R.drawable.ic_pictogram_placeholder),
-            Pictogram("galleta", "galleta", "galeta", R.drawable.ic_pictogram_placeholder),
-            Pictogram("niña", "niña", "nena", R.drawable.ic_pictogram_placeholder),
-            Pictogram("comer", "comer", "menjar", R.drawable.ic_pictogram_placeholder),
-            Pictogram("manzana", "manzana", "poma", R.drawable.ic_pictogram_placeholder)
-        )
+    // Load pictogram catalog from JSON file
+    val pictogramCatalog = remember {
+        PictogramCatalog.load(context)
     }
     
     DisposableEffect(Unit) {
@@ -92,7 +87,7 @@ fun MainScreen(
         ) {
             // Pictogram grid takes most of the space
             PictogramGrid(
-                pictograms = availablePictograms,
+                pictograms = pictogramCatalog.getAllPictograms(),
                 currentLanguage = settings.language,
                 showLabels = settings.showLabels,
                 onPictogramClick = { pictogram ->
