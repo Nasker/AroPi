@@ -18,7 +18,8 @@ data class AppSettings(
     val speechPitch: Float = 1.0f,
     val autoSpeak: Boolean = true,
     val showLabels: Boolean = true,
-    val volumeBoost: Boolean = false  // Boost media volume when speaking
+    val volumeBoost: Boolean = false,  // Boost media volume when speaking
+    val gridColumns: Int = 4
 )
 
 /**
@@ -26,6 +27,7 @@ data class AppSettings(
  */
 @Serializable(with = AppLanguageSerializer::class)
 enum class AppLanguage(val displayName: String, val locale: Locale) {
+    ENGLISH("English", Locale("en", "US")),
     SPANISH("Español", Locale("es", "ES")),
     CATALAN("Català", Locale("ca", "ES"));
     

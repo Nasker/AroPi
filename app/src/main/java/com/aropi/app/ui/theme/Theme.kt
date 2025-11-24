@@ -13,10 +13,10 @@ import androidx.core.view.WindowCompat
 // Kid-friendly light theme - warm, cozy, playful colors
 private val LightColorScheme = lightColorScheme(
     // Warm coral/peach primary - friendly and inviting
-    primary = Color(0xFFFF6B6B),
+    primary = Color(0xFF4CAF50),
     onPrimary = Color.White,
     primaryContainer = Color(0xFFFCF5C7),
-    onPrimaryContainer = Color(0xFF8B2020),
+    onPrimaryContainer = Color(0xFF4CAF50),
     
     // Soft sky blue secondary - calming and cheerful
     secondary = Color(0xFF4ECDC4),
@@ -38,11 +38,11 @@ private val LightColorScheme = lightColorScheme(
     
     // Soft cream background - easy on the eyes
     background = Color(0xFFFFFDF7),
-    onBackground = Color(0xFF2D2D2D),
+    onBackground = Color(0xFF4CAF50),
     
     // Clean white surfaces with warmth
     surface = Color(0xFFFFFFFE),
-    onSurface = Color(0xFF2D2D2D),
+    onSurface = Color(0xFF4CAF50),
     
     // Soft lavender variant - gentle contrast
     surfaceVariant = Color(0xFFF5F0FF),

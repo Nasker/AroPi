@@ -1,5 +1,6 @@
 package com.aropi.app.model
 
+import android.annotation.SuppressLint
 import android.content.Context
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -10,6 +11,7 @@ import java.io.File
  * Represents a catalog of pictograms organized by categories.
  * Each category (e.g., subjects, actions, places) contains a list of related pictograms.
  */
+@SuppressLint("UnsafeOptInUsageError")
 @Serializable
 data class PictogramCatalog(
     val categories: Map<String, List<Pictogram>>

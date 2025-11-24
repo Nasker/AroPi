@@ -43,7 +43,7 @@ fun PhraseBar(
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.primaryContainer
         )
     ) {
         Column(
@@ -64,7 +64,7 @@ fun PhraseBar(
                         Text(
                             text = "Toca pictogramas para construir una frase",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
                     }
@@ -97,7 +97,7 @@ fun PhraseBar(
                         contentDescription = "Clear"
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Borrar", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text("Borrar", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
                 
                 // Speak button
@@ -109,7 +109,7 @@ fun PhraseBar(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
-                    Text("🔊 Hablar", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text("🔊 Hablar", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
             }
         }

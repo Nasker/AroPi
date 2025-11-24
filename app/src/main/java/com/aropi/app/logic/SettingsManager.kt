@@ -25,6 +25,7 @@ class SettingsManager(context: Context) {
         private const val KEY_AUTO_SPEAK = "auto_speak"
         private const val KEY_SHOW_LABELS = "show_labels"
         private const val KEY_VOLUME_BOOST = "volume_boost"
+        private const val KEY_GRID_COLUMNS = "grid_columns"
     }
     
     private fun loadSettings(): AppSettings {
@@ -37,7 +38,8 @@ class SettingsManager(context: Context) {
             speechPitch = prefs.getFloat(KEY_SPEECH_PITCH, 1.0f),
             autoSpeak = prefs.getBoolean(KEY_AUTO_SPEAK, true),
             showLabels = prefs.getBoolean(KEY_SHOW_LABELS, true),
-            volumeBoost = prefs.getBoolean(KEY_VOLUME_BOOST, false)
+            volumeBoost = prefs.getBoolean(KEY_VOLUME_BOOST, false),
+            gridColumns = prefs.getInt(KEY_GRID_COLUMNS, 4)
         )
     }
     
@@ -49,6 +51,7 @@ class SettingsManager(context: Context) {
             putBoolean(KEY_AUTO_SPEAK, settings.autoSpeak)
             putBoolean(KEY_SHOW_LABELS, settings.showLabels)
             putBoolean(KEY_VOLUME_BOOST, settings.volumeBoost)
+            putInt(KEY_GRID_COLUMNS, settings.gridColumns)
             apply()
         }
         _settings.value = settings
@@ -76,5 +79,9 @@ class SettingsManager(context: Context) {
     
     fun updateVolumeBoost(enabled: Boolean) {
         updateSettings(_settings.value.copy(volumeBoost = enabled))
+    }
+    
+    fun updateGridColumns(columns: Int) {
+        updateSettings(_settings.value.copy(gridColumns = columns))
     }
 }

@@ -2,8 +2,9 @@
   "categories": {
     "subjects": [
       {
-        "id": "yo",
+        "id": "I",
         "labels": {
+          "ENGLISH": "I",
           "SPANISH": "yo",
           "CATALAN": "jo"
         },
@@ -11,8 +12,9 @@
         "grammarType": "pronoun"
       },
       {
-        "id": "tu",
+        "id": "you",
         "labels": {
+          "ENGLISH": "you",
           "SPANISH": "tú",
           "CATALAN": "tu"
         },
@@ -20,8 +22,9 @@
         "grammarType": "pronoun"
       },
       {
-        "id": "niña",
+        "id": "girl",
         "labels": {
+          "ENGLISH": "girl",
           "SPANISH": "niña",
           "CATALAN": "nena"
         },
@@ -29,8 +32,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "niño",
+        "id": "boy",
         "labels": {
+          "ENGLISH": "boy",
           "SPANISH": "niño",
           "CATALAN": "nen"
         },
@@ -38,8 +42,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "mama",
+        "id": "mom",
         "labels": {
+          "ENGLISH": "mom",
           "SPANISH": "mamá",
           "CATALAN": "mare"
         },
@@ -47,8 +52,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "papa",
+        "id": "dad",
         "labels": {
+          "ENGLISH": "dad",
           "SPANISH": "papá",
           "CATALAN": "pare"
         },
@@ -58,8 +64,9 @@
     ],
     "actions": [
       {
-        "id": "querer",
+        "id": "want",
         "labels": {
+          "ENGLISH": "want",
           "SPANISH": "querer",
           "CATALAN": "voler"
         },
@@ -67,8 +74,9 @@
         "grammarType": "verb"
       },
       {
-        "id": "comer",
+        "id": "eat",
         "labels": {
+          "ENGLISH": "eat",
           "SPANISH": "comer",
           "CATALAN": "menjar"
         },
@@ -76,8 +84,9 @@
         "grammarType": "verb"
       },
       {
-        "id": "beber",
+        "id": "drink",
         "labels": {
+          "ENGLISH": "drink",
           "SPANISH": "beber",
           "CATALAN": "beure"
         },
@@ -85,8 +94,9 @@
         "grammarType": "verb"
       },
       {
-        "id": "jugar",
+        "id": "play",
         "labels": {
+          "ENGLISH": "play",
           "SPANISH": "jugar",
           "CATALAN": "jugar"
         },
@@ -94,8 +104,9 @@
         "grammarType": "verb"
       },
       {
-        "id": "dormir",
+        "id": "sleep",
         "labels": {
+          "ENGLISH": "sleep",
           "SPANISH": "dormir",
           "CATALAN": "dormir"
         },
@@ -103,8 +114,9 @@
         "grammarType": "verb"
       },
       {
-        "id": "ir",
+        "id": "go",
         "labels": {
+          "ENGLISH": "go",
           "SPANISH": "ir",
           "CATALAN": "anar"
         },
@@ -114,8 +126,9 @@
     ],
     "objects": [
       {
-        "id": "galleta",
+        "id": "cookie",
         "labels": {
+          "ENGLISH": "cookie",
           "SPANISH": "galleta",
           "CATALAN": "galeta"
         },
@@ -123,8 +136,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "manzana",
+        "id": "apple",
         "labels": {
+          "ENGLISH": "apple",
           "SPANISH": "manzana",
           "CATALAN": "poma"
         },
@@ -132,8 +146,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "agua",
+        "id": "water",
         "labels": {
+          "ENGLISH": "water",
           "SPANISH": "agua",
           "CATALAN": "aigua"
         },
@@ -141,8 +156,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "leche",
+        "id": "milk",
         "labels": {
+          "ENGLISH": "milk",
           "SPANISH": "leche",
           "CATALAN": "llet"
         },
@@ -150,8 +166,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "pan",
+        "id": "bread",
         "labels": {
+          "ENGLISH": "bread",
           "SPANISH": "pan",
           "CATALAN": "pa"
         },
@@ -161,8 +178,9 @@
     ],
     "places": [
       {
-        "id": "casa",
+        "id": "home",
         "labels": {
+          "ENGLISH": "home",
           "SPANISH": "casa",
           "CATALAN": "casa"
         },
@@ -170,8 +188,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "escuela",
+        "id": "school",
         "labels": {
+          "ENGLISH": "school",
           "SPANISH": "escuela",
           "CATALAN": "escola"
         },
@@ -179,8 +198,9 @@
         "grammarType": "noun"
       },
       {
-        "id": "parque",
+        "id": "park",
         "labels": {
+          "ENGLISH": "park",
           "SPANISH": "parque",
           "CATALAN": "parc"
         },
@@ -190,17 +210,19 @@
     ],
     "feelings": [
       {
-        "id": "feliz",
+        "id": "happy",
         "labels": {
-          "SPANISH": "feliz",
-          "CATALAN": "feliç"
+          "ENGLISH": "happy",
+          "SPANISH": "contento",
+          "CATALAN": "content"
         },
         "iconRes": 2131165314,
         "grammarType": "adjective"
       },
       {
-        "id": "triste",
+        "id": "sad",
         "labels": {
+          "ENGLISH": "sad",
           "SPANISH": "triste",
           "CATALAN": "trist"
         },
@@ -208,8 +230,9 @@
         "grammarType": "adjective"
       },
       {
-        "id": "cansado",
+        "id": "tired",
         "labels": {
+          "ENGLISH": "tired",
           "SPANISH": "cansado",
           "CATALAN": "cansat"
         },

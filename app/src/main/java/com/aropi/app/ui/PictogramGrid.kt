@@ -34,11 +34,12 @@ fun PictogramGrid(
     pictograms: List<Pictogram>,
     currentLanguage: AppLanguage,
     showLabels: Boolean,
+    gridColumns: Int,
     onPictogramClick: (Pictogram) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(gridColumns),
         contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -49,6 +50,7 @@ fun PictogramGrid(
                 pictogram = pictogram,
                 currentLanguage = currentLanguage,
                 showLabel = showLabels,
+                gridColumns = gridColumns,
                 onClick = { onPictogramClick(pictogram) }
             )
         }
@@ -60,6 +62,7 @@ private fun PictogramCard(
     pictogram: Pictogram,
     currentLanguage: AppLanguage,
     showLabel: Boolean,
+    gridColumns: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -70,7 +73,7 @@ private fun PictogramCard(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = pictogram.color.color
         )
     ) {
         Column(
@@ -84,7 +87,7 @@ private fun PictogramCard(
                 painter = painterResource(id = pictogram.iconRes),
                 contentDescription = pictogram.getLabel(currentLanguage),
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(if (gridColumns > 3) 48.dp else 64.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
             
@@ -93,10 +96,10 @@ private fun PictogramCard(
                 
                 Text(
                     text = pictogram.getLabel(currentLanguage),
-                    fontSize = 14.sp,
+                    fontSize = if (gridColumns > 3) 12.sp else 14.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 2
                 )
             }

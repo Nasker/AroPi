@@ -11,8 +11,8 @@ The `pictogram_catalog.json` file contains all pictograms organized by categorie
       {
         "id": "unique_id",
         "labels": {
-          "SPANISH": "spanish_label",
-          "CATALAN": "catalan_label"
+          "es": "spanish_label",
+          "ca": "catalan_label"
         },
         "iconRes": 2131165314,
         "grammarType": "noun|verb|adjective|pronoun"

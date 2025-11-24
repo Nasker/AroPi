@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.aropi.app.logic.SettingsManager
 import com.aropi.app.model.AppLanguage
@@ -28,7 +29,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Configuración") },
+                title = { Text("Configuración")},
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -101,19 +102,29 @@ fun SettingsScreen(
             
             // Display Settings Section
             SettingsSection(title = "Visualización") {
-                SettingSwitch(
-                    title = "Mostrar etiquetas",
-                    description = "Muestra el texto debajo de los pictogramas",
-                    checked = settings.showLabels,
-                    onCheckedChange = { settingsManager.updateShowLabels(it) }
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    SettingSwitch(
+                        title = "Mostrar etiquetas",
+                        description = "Muestra el texto debajo de los pictogramas",
+                        checked = settings.showLabels,
+                        onCheckedChange = { settingsManager.updateShowLabels(it) }
+                    )
+                    SettingSlider(
+                        title = "Tamaño de la cuadrícula",
+                        value = settings.gridColumns.toFloat(),
+                        valueRange = 2f..6f,
+                        onValueChange = { settingsManager.updateGridColumns(it.toInt()) },
+                        valueLabel = { "${it.toInt()} columnas" },
+                        steps = 3
+                    )
+                }
             }
             
             // App Info
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             ) {
                 Column(
@@ -123,17 +134,17 @@ fun SettingsScreen(
                     Text(
                         text = "AroPi",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
                         text = "Versión 1.0",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
                         text = "Creado con amor para Aroa 💝",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
             }
@@ -150,12 +161,12 @@ private fun SettingsSection(
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onSurface
         )
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
@@ -186,7 +197,8 @@ private fun LanguageSelector(
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = language.displayName,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -208,12 +220,13 @@ private fun SettingSwitch(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
         Switch(
@@ -229,7 +242,8 @@ private fun SettingSlider(
     value: Float,
     valueRange: ClosedFloatingPointRange<Float>,
     onValueChange: (Float) -> Unit,
-    valueLabel: (Float) -> String
+    valueLabel: (Float) -> String,
+    steps: Int = 5
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(
@@ -239,19 +253,20 @@ private fun SettingSlider(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = valueLabel(value),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
         Slider(
             value = value,
             onValueChange = onValueChange,
             valueRange = valueRange,
-            steps = 5
+            steps = steps
         )
     }
 }
