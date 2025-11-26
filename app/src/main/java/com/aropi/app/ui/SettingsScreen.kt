@@ -29,12 +29,12 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Configuración")},
+                title = { Text("Configuració")},
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Volver"
+                            contentDescription = "Tornar"
                         )
                     }
                 },
@@ -62,19 +62,19 @@ fun SettingsScreen(
             }
             
             // Speech Settings Section
-            SettingsSection(title = "Voz") {
+            SettingsSection(title = "Veu") {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     // Auto-speak toggle
                     SettingSwitch(
-                        title = "Reproducir al tocar",
-                        description = "Reproduce la palabra al seleccionar un pictograma",
+                        title = "Reproduïr al tocar",
+                        description = "Reprodueix la paraula al seleccionar un pictograma",
                         checked = settings.autoSpeak,
                         onCheckedChange = { settingsManager.updateAutoSpeak(it) }
                     )
                     
                     // Speech rate slider
                     SettingSlider(
-                        title = "Velocidad de voz",
+                        title = "Velocitat de veu",
                         value = settings.speechRate,
                         valueRange = 0.5f..2.0f,
                         onValueChange = { settingsManager.updateSpeechRate(it) },
@@ -83,7 +83,7 @@ fun SettingsScreen(
                     
                     // Speech pitch slider
                     SettingSlider(
-                        title = "Tono de voz",
+                        title = "Tó de veu",
                         value = settings.speechPitch,
                         valueRange = 0.5f..2.0f,
                         onValueChange = { settingsManager.updateSpeechPitch(it) },
@@ -92,8 +92,8 @@ fun SettingsScreen(
                     
                     // Volume boost toggle
                     SettingSwitch(
-                        title = "Aumentar volumen",
-                        description = "Sube el volumen automáticamente al hablar",
+                        title = "Volum Extra",
+                        description = "Puja el volum automàticament",
                         checked = settings.volumeBoost,
                         onCheckedChange = { settingsManager.updateVolumeBoost(it) }
                     )
@@ -101,20 +101,20 @@ fun SettingsScreen(
             }
             
             // Display Settings Section
-            SettingsSection(title = "Visualización") {
+            SettingsSection(title = "Visualització") {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     SettingSwitch(
-                        title = "Mostrar etiquetas",
-                        description = "Muestra el texto debajo de los pictogramas",
+                        title = "Mostrar etiquetes",
+                        description = "Mostra el text sota els pictogrames",
                         checked = settings.showLabels,
                         onCheckedChange = { settingsManager.updateShowLabels(it) }
                     )
                     SettingSlider(
-                        title = "Tamaño de la cuadrícula",
+                        title = "Tamany de la quadrícula",
                         value = settings.gridColumns.toFloat(),
                         valueRange = 2f..6f,
                         onValueChange = { settingsManager.updateGridColumns(it.toInt()) },
-                        valueLabel = { "${it.toInt()} columnas" },
+                        valueLabel = { "${it.toInt()} columnes" },
                         steps = 3
                     )
                 }
@@ -137,12 +137,12 @@ fun SettingsScreen(
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
-                        text = "Versión 1.0",
+                        text = "Versió 1.0",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
-                        text = "Creado con amor para Aroa 💝",
+                        text = "Creat amb amor per tu Aroa 💝",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )

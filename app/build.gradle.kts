@@ -55,6 +55,9 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     
+    // Google Fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.0")
+    
     // Keep these temporarily for old layout files that still exist
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)

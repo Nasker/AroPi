@@ -8,10 +8,10 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class PictogramColor(val color: Color) {
-    YELLOW(Color(0xFFFFE082)),   // For pronouns/subjects
-    GREEN(Color(0xFFA5D6A7)),    // For verbs/actions
-    BLUE(Color(0xFF90CAF9)),     // For adverbs/modifiers/adjectives
-    ORANGE(Color(0xFFFFCC80)),  // For nouns
+    YELLOW(Color(0xFFF4FA14)),   // For pronouns/subjects
+    GREEN(Color(0xFF4EFF58)),    // For verbs/actions
+    BLUE(Color(0xFF4C8EFF)),     // For adverbs/modifiers/adjectives
+    ORANGE(Color(0xFFFF9E19)),  // For nouns
     PURPLE(Color(0xFFCE93D8)),  // For shortcuts to phrases
     UNKNOWN(Color(0xFFE0E0E0))         // Default/fallback color
 }

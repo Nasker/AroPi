@@ -62,7 +62,7 @@ fun PhraseBar(
                 if (pictograms.isEmpty()) {
                     item {
                         Text(
-                            text = "Toca pictogramas para construir una frase",
+                            text = "Toca pictogrames per fer una frase",
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.padding(horizontal = 16.dp)
@@ -94,10 +94,10 @@ fun PhraseBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = "Clear"
+                        contentDescription = "Borra frase"
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Borrar", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                    Text("Borra", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
                 
                 // Speak button
@@ -109,7 +109,7 @@ fun PhraseBar(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
-                    Text("🔊 Hablar", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                    Text("🔊 Parla", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
             }
         }

@@ -5,10 +5,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
 import com.aropi.app.logic.PhraseManager
 import com.aropi.app.logic.SettingsManager
@@ -24,7 +27,7 @@ import com.aropi.app.R
  * Main screen of the AAC app.
  * Displays pictogram grid and phrase bar with modern Material 3 design.
  */
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTextApi::class)
 @Composable
 fun MainScreen(
     phraseManager: PhraseManager = remember { PhraseManager() },
@@ -44,6 +47,20 @@ fun MainScreen(
         PictogramCatalog.load(context)
     }
     
+    val fredokaGoogleFont = remember { GoogleFont("Fredoka One") }
+    val fredokaProvider = remember {
+        GoogleFont.Provider(
+            providerAuthority = "com.google.android.gms.fonts",
+            providerPackage = "com.google.android.gms",
+            certificates = R.array.com_google_android_gms_fonts_certs
+        )
+    }
+    val fredokaFontFamily = remember {
+        FontFamily(
+            Font(googleFont = fredokaGoogleFont, fontProvider = fredokaProvider)
+        )
+    }
+    
     DisposableEffect(Unit) {
         onDispose {
             ttsManager.shutdown()
@@ -59,22 +76,26 @@ fun MainScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { 
+                    title = {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ){
                         Text(
                             "AroPi",
                             style = MaterialTheme.typography.headlineMedium.copy(
-                                fontFamily = FontFamily.SansSerif,
-                                fontWeight = FontWeight.Bold
+                                fontFamily = fredokaFontFamily
                             ),
-                            textAlign = TextAlign.Center,
+                                textAlign = TextAlign.Right,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
-                        ) 
+                        )
+                            }
                     },
                     actions = {
                         IconButton(onClick = { showSettings = true }) {
                             Icon(
                                 imageVector = Icons.Default.Settings,
-                                contentDescription = "Configuración"
+                                contentDescription = "Configuració"
                             )
                         }
                     },
