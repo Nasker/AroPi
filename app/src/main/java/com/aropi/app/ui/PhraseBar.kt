@@ -1,27 +1,20 @@
 package com.aropi.app.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
+import com.aropi.app.ui.components.PictogramCard
 
 /**
  * Displays the current phrase sequence with Clear and Speak buttons.
@@ -38,24 +31,38 @@ fun PhraseBar(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .height(140.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
     ) {
-        Column(
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Pictogram sequence
+            IconButton(
+                onClick = onClear,
+                enabled = pictograms.isNotEmpty(),
+                modifier = Modifier
+                    .size(56.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Borra frase",
+                    tint = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+
             LazyRow(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
+                    .heightIn(min = 80.dp)
+                    .padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -64,113 +71,53 @@ fun PhraseBar(
                         Text(
                             text = "Toca pictogrames per fer una frase",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                 } else {
                     itemsIndexed(pictograms) { index, pictogram ->
-                        PhraseBarPictogram(
-                            pictogram = pictogram,
-                            currentLanguage = currentLanguage,
-                            onRemove = { onRemovePictogram(index) }
-                        )
+                        Box {
+                            PictogramCard(
+                                pictogram = pictogram,
+                                currentLanguage = currentLanguage,
+                                showLabel = true,
+                                size = 80.dp
+                            )
+                            
+                            // Remove button overlay
+                            IconButton(
+                                onClick = { onRemovePictogram(index) },
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.TopEnd)
+                                    .offset(x = 4.dp, y = (-4).dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "Remove",
+                                    tint = MaterialTheme.colorScheme.error,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            // Action buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+
+            IconButton(
+                onClick = onSpeak,
+                enabled = pictograms.isNotEmpty(),
+                modifier = Modifier
+                    .size(56.dp)
             ) {
-                // Clear button
-                OutlinedButton(
-                    onClick = onClear,
-                    modifier = Modifier.weight(1f),
-                    enabled = pictograms.isNotEmpty()
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = "Borra frase"
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Borra", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
-                }
-                
-                // Speak button
-                Button(
-                    onClick = onSpeak,
-                    modifier = Modifier.weight(1f),
-                    enabled = pictograms.isNotEmpty(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Text("🔊 Parla", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
-                }
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = "Parla",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(32.dp)
+                )
             }
         }
     }
 }
 
-@Composable
-private fun PhraseBarPictogram(
-    pictogram: Pictogram,
-    currentLanguage: AppLanguage,
-    onRemove: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(modifier = modifier) {
-        Card(
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
-            )
-        ) {
-            Column(
-                modifier = Modifier
-                    .width(70.dp)
-                    .padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = pictogram.iconRes),
-                    contentDescription = pictogram.getLabel(currentLanguage),
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                )
-                
-                Spacer(modifier = Modifier.height(4.dp))
-                
-                Text(
-                    text = pictogram.getLabel(currentLanguage),
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    maxLines = 1
-                )
-            }
-        }
-        
-        // Remove button
-        IconButton(
-            onClick = onRemove,
-            modifier = Modifier
-                .size(20.dp)
-                .align(Alignment.TopEnd)
-                .offset(x = 4.dp, y = (-4).dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = "Remove",
-                tint = MaterialTheme.colorScheme.error,
-                modifier = Modifier.size(16.dp)
-            )
-        }
-    }
-}

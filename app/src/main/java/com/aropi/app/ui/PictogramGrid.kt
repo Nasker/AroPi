@@ -1,29 +1,15 @@
 package com.aropi.app.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
+import com.aropi.app.ui.components.PictogramCard
 
 /**
  * Displays a grid of pictograms that users can tap to build phrases.
@@ -38,11 +24,22 @@ fun PictogramGrid(
     onPictogramClick: (Pictogram) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val clampedColumns = gridColumns.coerceIn(1, 16)
+    val horizontalSpacing = when {
+        clampedColumns >= 12 -> 6.dp
+        clampedColumns >= 8 -> 8.dp
+        else -> 12.dp
+    }
+    val verticalSpacing = when {
+        clampedColumns >= 12 -> 6.dp
+        clampedColumns >= 8 -> 8.dp
+        else -> 12.dp
+    }
     LazyVerticalGrid(
-        columns = GridCells.Fixed(gridColumns),
+        columns = GridCells.Fixed(clampedColumns),
         contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
+        verticalArrangement = Arrangement.spacedBy(verticalSpacing),
         modifier = modifier
     ) {
         items(pictograms) { pictogram ->
@@ -50,59 +47,10 @@ fun PictogramGrid(
                 pictogram = pictogram,
                 currentLanguage = currentLanguage,
                 showLabel = showLabels,
-                gridColumns = gridColumns,
+                size = null,  // Let grid control size
                 onClick = { onPictogramClick(pictogram) }
             )
         }
     }
 }
 
-@Composable
-private fun PictogramCard(
-    pictogram: Pictogram,
-    currentLanguage: AppLanguage,
-    showLabel: Boolean,
-    gridColumns: Int,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .aspectRatio(1f)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = pictogram.color.color
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = pictogram.iconRes),
-                contentDescription = pictogram.getLabel(currentLanguage),
-                modifier = Modifier
-                    .size(if (gridColumns > 3) 48.dp else 64.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
-            
-            if (showLabel) {
-                Spacer(modifier = Modifier.height(4.dp))
-                
-                Text(
-                    text = pictogram.getLabel(currentLanguage),
-                    fontSize = if (gridColumns > 3) 12.sp else 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 2
-                )
-            }
-        }
-    }
-}

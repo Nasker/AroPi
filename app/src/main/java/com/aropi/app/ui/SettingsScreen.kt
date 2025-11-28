@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.aropi.app.logic.SettingsManager
 import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.AppSettings
+import kotlin.math.roundToInt
 
 /**
  * Settings screen for configuring app preferences.
@@ -112,10 +113,13 @@ fun SettingsScreen(
                     SettingSlider(
                         title = "Tamany de la quadrícula",
                         value = settings.gridColumns.toFloat(),
-                        valueRange = 2f..6f,
-                        onValueChange = { settingsManager.updateGridColumns(it.toInt()) },
-                        valueLabel = { "${it.toInt()} columnes" },
-                        steps = 3
+                        valueRange = 2f..16f,
+                        onValueChange = { value ->
+                            val rounded = value.roundToInt().coerceIn(2, 16)
+                            settingsManager.updateGridColumns(rounded)
+                        },
+                        valueLabel = { "${it.roundToInt()} columnes" },
+                        steps = 13
                     )
                 }
             }

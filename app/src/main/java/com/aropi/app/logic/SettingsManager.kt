@@ -39,7 +39,7 @@ class SettingsManager(context: Context) {
             autoSpeak = prefs.getBoolean(KEY_AUTO_SPEAK, true),
             showLabels = prefs.getBoolean(KEY_SHOW_LABELS, true),
             volumeBoost = prefs.getBoolean(KEY_VOLUME_BOOST, false),
-            gridColumns = prefs.getInt(KEY_GRID_COLUMNS, 4)
+            gridColumns = prefs.getInt(KEY_GRID_COLUMNS, 12)
         )
     }
     

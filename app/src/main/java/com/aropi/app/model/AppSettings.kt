@@ -19,7 +19,7 @@ data class AppSettings(
     val autoSpeak: Boolean = true,
     val showLabels: Boolean = true,
     val volumeBoost: Boolean = false,  // Boost media volume when speaking
-    val gridColumns: Int = 4
+    val gridColumns: Int = 12
 )
 
 /**

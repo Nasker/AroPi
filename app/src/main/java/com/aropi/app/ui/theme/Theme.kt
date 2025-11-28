@@ -26,7 +26,7 @@ private val LightColorScheme = lightColorScheme(
     
     // Sunny yellow tertiary - bright and happy
     tertiary = Color(0xFFFFD93D),
-    onTertiary = Color(0xFF3D3D00),
+    onTertiary = Color(0xFF000000),
     tertiaryContainer = Color(0xFFFCF5C7),
     onTertiaryContainer = Color(0xFF6B5E00),
     
