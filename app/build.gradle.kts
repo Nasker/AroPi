@@ -61,6 +61,9 @@ dependencies {
     // Coil for image loading
     implementation("io.coil-kt:coil-compose:2.5.0")
     
+    // Image cropper
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+    
     // Keep these temporarily for old layout files that still exist
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)

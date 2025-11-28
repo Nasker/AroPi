@@ -1,5 +1,6 @@
 package com.aropi.app.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -33,24 +34,50 @@ fun MainScreen(
     phraseManager: PhraseManager = remember { PhraseManager() },
     composer: PhraseComposer = remember { MockComposer() }
 ) {
+    Log.d("AroPi", "MainScreen composable started")
+    
     val context = LocalContext.current
-    val ttsManager = remember { TTSManager(context) }
-    val settingsManager = remember { SettingsManager(context) }
+    Log.d("AroPi", "Context obtained")
+    
+    val ttsManager = remember { 
+        Log.d("AroPi", "Creating TTSManager")
+        TTSManager(context)
+    }
+    Log.d("AroPi", "TTSManager created")
+    
+    val settingsManager = remember { 
+        Log.d("AroPi", "Creating SettingsManager")
+        SettingsManager(context)
+    }
+    Log.d("AroPi", "SettingsManager created")
     
     val pictograms by phraseManager.sequence.collectAsState()
+    Log.d("AroPi", "Pictograms state collected")
+    
     val settings by settingsManager.settings.collectAsState()
+    Log.d("AroPi", "Settings state collected")
     
     var showSettings by remember { mutableStateOf(false) }
     var showManagePictograms by remember { mutableStateOf(false) }
     var showAddPictogram by remember { mutableStateOf(false) }
     var editingPictogram by remember { mutableStateOf<Pair<Pictogram, String>?>(null) }
     var catalogVersion by remember { mutableStateOf(0) }
+    Log.d("AroPi", "Navigation states initialized")
     
     // Load pictogram catalog from JSON file
     val pictogramCatalog = remember(catalogVersion) {
-        PictogramCatalog.load(context)
+        Log.d("AroPi", "Loading pictogram catalog (version: $catalogVersion)...")
+        try {
+            val catalog = PictogramCatalog.load(context)
+            Log.d("AroPi", "Pictogram catalog loaded with ${catalog.getAllPictograms().size} pictograms")
+            catalog
+        } catch (e: Exception) {
+            Log.e("AroPi", "ERROR loading catalog: ${e.message}", e)
+            throw e
+        }
     }
     
+    Log.d("AroPi", "Loading Google Fonts...")
     val fredokaGoogleFont = remember { GoogleFont("Fredoka One") }
     val fredokaProvider = remember {
         GoogleFont.Provider(
@@ -64,6 +91,7 @@ fun MainScreen(
             Font(googleFont = fredokaGoogleFont, fontProvider = fredokaProvider)
         )
     }
+    Log.d("AroPi", "Google Fonts loaded")
     
     DisposableEffect(Unit) {
         onDispose {
@@ -72,6 +100,7 @@ fun MainScreen(
     }
     
     if (editingPictogram != null) {
+        Log.d("AroPi", "Rendering AddPictogramScreen (edit mode)")
         AddPictogramScreen(
             onNavigateBack = { 
                 editingPictogram = null
@@ -86,6 +115,7 @@ fun MainScreen(
             existingCategory = editingPictogram!!.second
         )
     } else if (showAddPictogram) {
+        Log.d("AroPi", "Rendering AddPictogramScreen (add mode)")
         AddPictogramScreen(
             onNavigateBack = { 
                 showAddPictogram = false
@@ -98,6 +128,7 @@ fun MainScreen(
             }
         )
     } else if (showManagePictograms) {
+        Log.d("AroPi", "Rendering ManagePictogramsScreen")
         ManagePictogramsScreen(
             onNavigateBack = { 
                 showManagePictograms = false
@@ -112,12 +143,14 @@ fun MainScreen(
             }
         )
     } else if (showSettings) {
+        Log.d("AroPi", "Rendering SettingsScreen")
         SettingsScreen(
             settingsManager = settingsManager,
             onNavigateBack = { showSettings = false },
             onManagePictograms = { showManagePictograms = true }
         )
     } else {
+        Log.d("AroPi", "Rendering main Scaffold with grid and phrase bar")
         Scaffold(
             topBar = {
                 TopAppBar(

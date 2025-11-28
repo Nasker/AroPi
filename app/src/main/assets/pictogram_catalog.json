@@ -8,7 +8,7 @@
           "SPANISH": "yo",
           "CATALAN": "jo"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "pronoun"
       },
       {
@@ -18,7 +18,7 @@
           "SPANISH": "tú",
           "CATALAN": "tu"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "pronoun"
       },
       {
@@ -28,7 +28,7 @@
           "SPANISH": "niña",
           "CATALAN": "nena"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -38,7 +38,7 @@
           "SPANISH": "niño",
           "CATALAN": "nen"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -48,7 +48,7 @@
           "SPANISH": "mamá",
           "CATALAN": "mare"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -58,7 +58,7 @@
           "SPANISH": "papá",
           "CATALAN": "pare"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       }
     ],
@@ -70,7 +70,7 @@
           "SPANISH": "querer",
           "CATALAN": "voler"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "verb"
       },
       {
@@ -80,7 +80,7 @@
           "SPANISH": "comer",
           "CATALAN": "menjar"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "verb"
       },
       {
@@ -90,7 +90,7 @@
           "SPANISH": "beber",
           "CATALAN": "beure"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "verb"
       },
       {
@@ -100,7 +100,7 @@
           "SPANISH": "jugar",
           "CATALAN": "jugar"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "verb"
       },
       {
@@ -110,7 +110,7 @@
           "SPANISH": "dormir",
           "CATALAN": "dormir"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "verb"
       },
       {
@@ -120,7 +120,7 @@
           "SPANISH": "ir",
           "CATALAN": "anar"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "verb"
       }
     ],
@@ -132,7 +132,7 @@
           "SPANISH": "galleta",
           "CATALAN": "galeta"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -142,7 +142,7 @@
           "SPANISH": "manzana",
           "CATALAN": "poma"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -152,7 +152,7 @@
           "SPANISH": "agua",
           "CATALAN": "aigua"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -162,7 +162,7 @@
           "SPANISH": "leche",
           "CATALAN": "llet"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -172,7 +172,7 @@
           "SPANISH": "pan",
           "CATALAN": "pa"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       }
     ],
@@ -184,7 +184,7 @@
           "SPANISH": "casa",
           "CATALAN": "casa"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -194,7 +194,7 @@
           "SPANISH": "escuela",
           "CATALAN": "escola"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       },
       {
@@ -204,7 +204,7 @@
           "SPANISH": "parque",
           "CATALAN": "parc"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "noun"
       }
     ],
@@ -216,7 +216,7 @@
           "SPANISH": "contento",
           "CATALAN": "content"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "adjective"
       },
       {
@@ -226,7 +226,7 @@
           "SPANISH": "triste",
           "CATALAN": "trist"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "adjective"
       },
       {
@@ -236,7 +236,7 @@
           "SPANISH": "cansado",
           "CATALAN": "cansat"
         },
-        "iconRes": 2131165314,
+        "iconRes": 2131230720,
         "grammarType": "adjective"
       }
     ]

@@ -3,6 +3,9 @@ package com.aropi.app.ui
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import androidx.compose.foundation.Image
 import androidx.core.content.FileProvider
 import java.io.File
@@ -70,17 +73,40 @@ fun AddPictogramScreen(
         )
     }
     
+    // Crop launcher - receives cropped image
+    val cropLauncher = rememberLauncherForActivityResult(
+        contract = CropImageContract()
+    ) { result ->
+        if (result.isSuccessful) {
+            selectedImageUri = result.uriContent
+        }
+    }
+    
+    // Gallery launcher - chains to crop
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        selectedImageUri = uri
+        uri?.let {
+            val cropOptions = CropImageContractOptions(it, CropImageOptions(
+                fixAspectRatio = true,
+                aspectRatioX = 1,
+                aspectRatioY = 1
+            ))
+            cropLauncher.launch(cropOptions)
+        }
     }
     
+    // Camera launcher - chains to crop
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
         if (success) {
-            selectedImageUri = tempImageUri
+            val cropOptions = CropImageContractOptions(tempImageUri, CropImageOptions(
+                fixAspectRatio = true,
+                aspectRatioX = 1,
+                aspectRatioY = 1
+            ))
+            cropLauncher.launch(cropOptions)
         }
     }
     
