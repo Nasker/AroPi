@@ -16,6 +16,7 @@ import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.aropi.app.R
 
 /**
  * Splash screen that displays "AroPi" with kid-friendly font and colors.

@@ -91,7 +91,7 @@ fun MainScreen(
                         )
                             }
                     },
-                    actions = {SF20211004365
+                    actions = {
                         IconButton(onClick = { showSettings = true }) {
                             Icon(
                                 imageVector = Icons.Default.Settings,
