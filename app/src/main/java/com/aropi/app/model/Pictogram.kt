@@ -13,7 +13,8 @@ data class Pictogram(
     val id: String,
     val labels: Map<AppLanguage, String>,  // Language-to-label mapping
     val iconRes: Int,
-    val grammarType: String = ""
+    val grammarType: String = "",
+    val customImagePath: String? = null  // Path to custom image in internal storage
 ) {
     val color: PictogramColor
         get() = when (grammarType) {

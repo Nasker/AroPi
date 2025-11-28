@@ -41,9 +41,13 @@ fun MainScreen(
     val settings by settingsManager.settings.collectAsState()
     
     var showSettings by remember { mutableStateOf(false) }
+    var showManagePictograms by remember { mutableStateOf(false) }
+    var showAddPictogram by remember { mutableStateOf(false) }
+    var editingPictogram by remember { mutableStateOf<Pair<Pictogram, String>?>(null) }
+    var catalogVersion by remember { mutableStateOf(0) }
     
     // Load pictogram catalog from JSON file
-    val pictogramCatalog = remember {
+    val pictogramCatalog = remember(catalogVersion) {
         PictogramCatalog.load(context)
     }
     
@@ -67,10 +71,51 @@ fun MainScreen(
         }
     }
     
-    if (showSettings) {
+    if (editingPictogram != null) {
+        AddPictogramScreen(
+            onNavigateBack = { 
+                editingPictogram = null
+                showManagePictograms = true
+            },
+            onPictogramAdded = {
+                editingPictogram = null
+                showManagePictograms = true
+                catalogVersion++
+            },
+            existingPictogram = editingPictogram!!.first,
+            existingCategory = editingPictogram!!.second
+        )
+    } else if (showAddPictogram) {
+        AddPictogramScreen(
+            onNavigateBack = { 
+                showAddPictogram = false
+                showManagePictograms = true
+            },
+            onPictogramAdded = {
+                showAddPictogram = false
+                showManagePictograms = true
+                catalogVersion++
+            }
+        )
+    } else if (showManagePictograms) {
+        ManagePictogramsScreen(
+            onNavigateBack = { 
+                showManagePictograms = false
+                showSettings = true
+            },
+            onAddPictogram = { showAddPictogram = true },
+            onEditPictogram = { pictogram, category ->
+                editingPictogram = Pair(pictogram, category)
+            },
+            onCatalogChanged = {
+                catalogVersion++ // Trigger catalog reload in main screen
+            }
+        )
+    } else if (showSettings) {
         SettingsScreen(
             settingsManager = settingsManager,
-            onNavigateBack = { showSettings = false }
+            onNavigateBack = { showSettings = false },
+            onManagePictograms = { showManagePictograms = true }
         )
     } else {
         Scaffold(

@@ -12,11 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import com.aropi.app.logic.PictogramImageManager
 import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
@@ -40,6 +44,9 @@ fun PictogramCard(
     onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    val imageManager = PictogramImageManager(context)
+    
     val clickModifier = if (onClick != null) {
         Modifier.clickable(onClick = onClick)
     } else {
@@ -70,15 +77,32 @@ fun PictogramCard(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             // Icon takes most space, centered
-            Image(
-                painter = painterResource(id = pictogram.iconRes),
-                contentDescription = pictogram.getLabel(currentLanguage),
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(bottom = if (showLabel) 4.dp else 0.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
+            if (pictogram.customImagePath != null && imageManager.imageExists(pictogram.customImagePath)) {
+                // Load custom image from internal storage
+                AsyncImage(
+                    model = imageManager.getImageFile(pictogram.customImagePath),
+                    contentDescription = pictogram.getLabel(currentLanguage),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .padding(bottom = if (showLabel) 4.dp else 0.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    fallback = painterResource(id = pictogram.iconRes)
+                )
+            } else {
+                // Use default drawable resource
+                Image(
+                    painter = painterResource(id = pictogram.iconRes),
+                    contentDescription = pictogram.getLabel(currentLanguage),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .padding(bottom = if (showLabel) 4.dp else 0.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }
             
             // Label at bottom
             if (showLabel) {

@@ -5,11 +5,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.aropi.app.logic.SettingsManager
 import com.aropi.app.model.AppLanguage
@@ -23,7 +26,8 @@ import kotlin.math.roundToInt
 @Composable
 fun SettingsScreen(
     settingsManager: SettingsManager,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onManagePictograms: () -> Unit = {}
 ) {
     val settings by settingsManager.settings.collectAsState()
     
@@ -54,6 +58,28 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            // Pictogram Management Section
+            SettingsSection(title = "Pictogrames") {
+                Button(
+                    onClick = onManagePictograms,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        "Gestionar Pictogrames",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+            
             // Language Section
             SettingsSection(title = "Idioma") {
                 LanguageSelector(
