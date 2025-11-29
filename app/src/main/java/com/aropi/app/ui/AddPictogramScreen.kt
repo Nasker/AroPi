@@ -55,6 +55,7 @@ fun AddPictogramScreen(
     var labelEnglish by remember { mutableStateOf(existingPictogram?.labels?.get(AppLanguage.ENGLISH) ?: "") }
     var labelSpanish by remember { mutableStateOf(existingPictogram?.labels?.get(AppLanguage.SPANISH) ?: "") }
     var labelCatalan by remember { mutableStateOf(existingPictogram?.labels?.get(AppLanguage.CATALAN) ?: "") }
+    // Grammar type: store English value, display Catalan label
     var selectedGrammarType by remember { mutableStateOf(existingPictogram?.grammarType ?: "noun") }
     var selectedCategory by remember { mutableStateOf(existingCategory ?: "subjects") }
     var showError by remember { mutableStateOf(false) }
@@ -110,8 +111,13 @@ fun AddPictogramScreen(
         }
     }
     
-    val grammarTypes = listOf("pronoun", "verb", "noun", "adjective", "shortcut")
-    val categories = listOf("subjects", "actions", "objects", "descriptors", "shortcuts")
+    // Grammar types: English values (for data) and Catalan labels (for UI)
+    val grammarTypeValues = listOf("pronoun", "verb", "noun", "adjective", "shortcut")
+    val grammarTypeLabels = listOf("pronom", "verb", "nom", "adjectiu", "drecera")
+    
+    // Categories: English values (for data) and Catalan labels (for UI)
+    val categoryValues = listOf("subjects", "actions", "objects", "descriptors", "shortcuts")
+    val categoryLabels = listOf("subjectes", "accions", "objectes", "descriptors", "dreceres")
     
     Scaffold(
         topBar = {
@@ -226,11 +232,11 @@ fun AddPictogramScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                grammarTypes.forEach { type ->
+                grammarTypeValues.forEachIndexed { index, value ->
                     FilterChip(
-                        selected = selectedGrammarType == type,
-                        onClick = { selectedGrammarType = type },
-                        label = { Text(type) }
+                        selected = selectedGrammarType == value,
+                        onClick = { selectedGrammarType = value },
+                        label = { Text(grammarTypeLabels[index]) }
                     )
                 }
             }
@@ -247,11 +253,11 @@ fun AddPictogramScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                categories.take(3).forEach { category ->
+                categoryValues.take(3).forEachIndexed { index, value ->
                     FilterChip(
-                        selected = selectedCategory == category,
-                        onClick = { selectedCategory = category },
-                        label = { Text(category) }
+                        selected = selectedCategory == value,
+                        onClick = { selectedCategory = value },
+                        label = { Text(categoryLabels[index]) }
                     )
                 }
             }
@@ -259,11 +265,11 @@ fun AddPictogramScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                categories.drop(3).forEach { category ->
+                categoryValues.drop(3).forEachIndexed { index, value ->
                     FilterChip(
-                        selected = selectedCategory == category,
-                        onClick = { selectedCategory = category },
-                        label = { Text(category) }
+                        selected = selectedCategory == value,
+                        onClick = { selectedCategory = value },
+                        label = { Text(categoryLabels[index + 3]) }
                     )
                 }
             }

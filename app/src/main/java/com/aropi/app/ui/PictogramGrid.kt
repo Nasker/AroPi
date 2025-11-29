@@ -17,7 +17,7 @@ import com.aropi.app.ui.components.PictogramCard
 
 /**
  * Displays a grid of pictograms organized by grammar type in columns.
- * Layout: 2 cols (pronouns) + 3 cols (verbs) + 4 cols (nouns) + 2 cols (adjectives) + 1 col (shortcuts) = 12 total
+ * Layout: 2 cols (pronouns) + 3 cols (verbs) + 3 cols (nouns) + 2 cols (adjectives) + 2 cols (shortcuts) = 12 total
  */
 @Composable
 fun PictogramGrid(
@@ -35,7 +35,7 @@ fun PictogramGrid(
     val adjectives = pictograms.filter { it.grammarType == "adjective" }
     val shortcuts = pictograms.filter { it.grammarType == "shortcut" }
     
-    // Column widths: pronoun=2, verb=3, noun=4, adjective=2, shortcut=1
+    // Column widths: pronoun=2, verb=3, noun=3, adjective=2, shortcut=2
     Row(
         modifier = modifier
             .fillMaxSize()
@@ -66,15 +66,15 @@ fun PictogramGrid(
             )
         }
         
-        // Nouns - 4 columns
+        // Nouns - 3 columns
         if (nouns.isNotEmpty()) {
             GrammarTypeColumn(
                 pictograms = nouns,
-                columns = 4,
+                columns = 3,
                 currentLanguage = currentLanguage,
                 showLabels = showLabels,
                 onPictogramClick = onPictogramClick,
-                modifier = Modifier.weight(4f)
+                modifier = Modifier.weight(3f)
             )
         }
         
@@ -90,15 +90,15 @@ fun PictogramGrid(
             )
         }
         
-        // Shortcuts - 1 column
+        // Shortcuts - 2 columns
         if (shortcuts.isNotEmpty()) {
             GrammarTypeColumn(
                 pictograms = shortcuts,
-                columns = 1,
+                columns = 2,
                 currentLanguage = currentLanguage,
                 showLabels = showLabels,
                 onPictogramClick = onPictogramClick,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(2f)
             )
         }
     }
