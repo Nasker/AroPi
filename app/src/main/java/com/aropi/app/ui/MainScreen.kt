@@ -14,12 +14,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
+import com.aropi.app.logic.BoardManager
 import com.aropi.app.logic.PhraseManager
 import com.aropi.app.logic.SettingsManager
 import com.aropi.app.logic.TTSManager
 import com.aropi.app.logic.composer.MockComposer
 import com.aropi.app.logic.composer.PhraseComposer
 import com.aropi.app.model.AppLanguage
+import com.aropi.app.model.Board
 import com.aropi.app.model.Pictogram
 import com.aropi.app.model.PictogramCatalog
 import com.aropi.app.R
@@ -60,11 +62,15 @@ fun MainScreen(
     var showSettings by remember { mutableStateOf(false) }
     var showManagePictograms by remember { mutableStateOf(false) }
     var showAddPictogram by remember { mutableStateOf(false) }
+    var showBoardManagement by remember { mutableStateOf(false) }
+    var showBoardEditor by remember { mutableStateOf(false) }
     var editingPictogram by remember { mutableStateOf<Pair<Pictogram, String>?>(null) }
+    var editingBoard by remember { mutableStateOf<Board?>(null) }
     var catalogVersion by remember { mutableStateOf(0) }
+    var boardVersion by remember { mutableStateOf(0) }
     Log.d("AroPi", "Navigation states initialized")
     
-    // Load pictogram catalog from JSON file
+    // Load pictogram catalog and board manager
     val pictogramCatalog = remember(catalogVersion) {
         Log.d("AroPi", "Loading pictogram catalog (version: $catalogVersion)...")
         try {
@@ -75,6 +81,32 @@ fun MainScreen(
             Log.e("AroPi", "ERROR loading catalog: ${e.message}", e)
             throw e
         }
+    }
+    
+    val boardManager = remember { BoardManager(context) }
+    
+    // Ensure default board exists
+    LaunchedEffect(Unit) {
+        boardManager.ensureDefaultBoard(pictogramCatalog)
+    }
+    
+    // Load active board pictograms
+    val activeBoardPictograms = remember(catalogVersion, boardVersion) {
+        Log.d("AroPi", "Loading active board pictograms...")
+        val activeBoardId = boardManager.getActiveBoardId()
+        val activeBoard = boardManager.loadBoard(activeBoardId)
+        if (activeBoard != null) {
+            val pictograms = boardManager.getBoardPictograms(activeBoard, pictogramCatalog)
+            Log.d("AroPi", "Active board '${activeBoard.name}' loaded with ${pictograms.size} pictograms")
+            pictograms
+        } else {
+            Log.w("AroPi", "No active board found, using all pictograms")
+            pictogramCatalog.getAllPictograms()
+        }
+    }
+    
+    val activeBoard = remember(boardVersion) {
+        boardManager.loadBoard(boardManager.getActiveBoardId())
     }
     
     Log.d("AroPi", "Loading Google Fonts...")
@@ -142,12 +174,48 @@ fun MainScreen(
                 catalogVersion++ // Trigger catalog reload in main screen
             }
         )
+    } else if (showBoardEditor) {
+        Log.d("AroPi", "Rendering BoardEditorScreen")
+        BoardEditorScreen(
+            existingBoard = editingBoard,
+            onNavigateBack = { 
+                showBoardEditor = false
+                editingBoard = null
+                showBoardManagement = true
+            },
+            onBoardSaved = {
+                showBoardEditor = false
+                editingBoard = null
+                showBoardManagement = true
+                boardVersion++
+            }
+        )
+    } else if (showBoardManagement) {
+        Log.d("AroPi", "Rendering BoardManagementScreen")
+        BoardManagementScreen(
+            onNavigateBack = { 
+                showBoardManagement = false
+                showSettings = true
+            },
+            onCreateBoard = { 
+                editingBoard = null
+                showBoardEditor = true
+            },
+            onEditBoard = { board ->
+                editingBoard = board
+                showBoardEditor = true
+            }
+        )
     } else if (showSettings) {
         Log.d("AroPi", "Rendering SettingsScreen")
         SettingsScreen(
             settingsManager = settingsManager,
-            onNavigateBack = { showSettings = false },
-            onManagePictograms = { showManagePictograms = true }
+            onNavigateBack = { 
+                showSettings = false
+                boardVersion++ // Refresh board in case it changed
+            },
+            onManagePictograms = { showManagePictograms = true },
+            onManageBoards = { showBoardManagement = true }
         )
     } else {
         Log.d("AroPi", "Rendering main Scaffold with grid and phrase bar")
@@ -155,19 +223,26 @@ fun MainScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ){
-                        Text(
-                            "AroPi",
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontFamily = fredokaFontFamily
-                            ),
-                                textAlign = TextAlign.Right,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                "AroPi",
+                                style = MaterialTheme.typography.headlineMedium.copy(
+                                    fontFamily = fredokaFontFamily
+                                ),
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                            activeBoard?.let {
+                                Text(
+                                    it.name,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                                )
                             }
+                        }
                     },
                     actions = {
                         IconButton(onClick = { showSettings = true }) {
@@ -191,7 +266,7 @@ fun MainScreen(
         ) {
             // Pictogram grid takes most of the space
             PictogramGrid(
-                pictograms = pictogramCatalog.getAllPictograms(),
+                pictograms = activeBoardPictograms,
                 currentLanguage = settings.language,
                 showLabels = settings.showLabels,
                 gridColumns = settings.gridColumns,

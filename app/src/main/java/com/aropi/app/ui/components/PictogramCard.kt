@@ -107,7 +107,7 @@ fun PictogramCard(
             // Label at bottom
             if (showLabel) {
                 Text(
-                    text = pictogram.getLabel(currentLanguage),
+                    text = pictogram.getLabel(currentLanguage).uppercase(),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,

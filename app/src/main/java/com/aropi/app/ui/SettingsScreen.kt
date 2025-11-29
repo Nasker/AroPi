@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,7 +28,8 @@ import kotlin.math.roundToInt
 fun SettingsScreen(
     settingsManager: SettingsManager,
     onNavigateBack: () -> Unit,
-    onManagePictograms: () -> Unit = {}
+    onManagePictograms: () -> Unit = {},
+    onManageBoards: () -> Unit = {}
 ) {
     val settings by settingsManager.settings.collectAsState()
     
@@ -58,13 +60,35 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            // Board Management Section
+            SettingsSection(title = "Taulers") {
+                Button(
+                    onClick = onManageBoards,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.List,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        "Gestionar Taulers",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+            
             // Pictogram Management Section
             SettingsSection(title = "Pictogrames") {
                 Button(
                     onClick = onManagePictograms,
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.secondary
                     )
                 ) {
                     Icon(

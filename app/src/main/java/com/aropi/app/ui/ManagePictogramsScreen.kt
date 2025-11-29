@@ -2,8 +2,9 @@ package com.aropi.app.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -75,15 +76,17 @@ fun ManagePictogramsScreen(
             )
         }
     ) { paddingValues ->
-        LazyColumn(
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(8),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(pictogramsWithCategory) { (pictogram, category, _) ->
-                PictogramListItem(
+                PictogramGridItem(
                     pictogram = pictogram,
                     category = category,
                     onEdit = { onEditPictogram(pictogram, category) },
@@ -136,77 +139,85 @@ fun ManagePictogramsScreen(
 }
 
 @Composable
-private fun PictogramListItem(
+private fun PictogramGridItem(
     pictogram: Pictogram,
     category: String,
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .aspectRatio(1f)
+            .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = pictogram.color.color.copy(alpha = 0.3f)
-        )
+            containerColor = pictogram.color.color
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    text = pictogram.getLabel(AppLanguage.CATALAN),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = "ES: ${pictogram.getLabel(AppLanguage.SPANISH)} | EN: ${pictogram.getLabel(AppLanguage.ENGLISH)}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = pictogram.grammarType,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        text = "•",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        text = category,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
+            // Pictogram card as background
+            com.aropi.app.ui.components.PictogramCard(
+                pictogram = pictogram,
+                currentLanguage = AppLanguage.CATALAN,
+                showLabel = true,
+                size = null,
+                onClick = null
+            )
             
+            // Action buttons overlay at top
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                IconButton(onClick = onEdit) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Editar",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
+                IconButton(
+                    onClick = onEdit,
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+                        ),
+                        modifier = Modifier.size(28.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = "Editar",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
                 }
-                IconButton(onClick = onDelete) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Eliminar",
-                        tint = MaterialTheme.colorScheme.error
-                    )
+                IconButton(
+                    onClick = onDelete,
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+                        ),
+                        modifier = Modifier.size(28.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Eliminar",
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
                 }
             }
         }
