@@ -18,7 +18,10 @@ import com.aropi.app.logic.BoardManager
 import com.aropi.app.logic.PhraseManager
 import com.aropi.app.logic.SettingsManager
 import com.aropi.app.logic.TTSManager
+import com.aropi.app.logic.bundle.BundleManager
+import com.aropi.app.logic.bundle.BundlePictogramRepository
 import com.aropi.app.logic.composer.MockComposer
+import com.aropi.app.logic.composer.OnDeviceBundleComposer
 import com.aropi.app.logic.composer.PhraseComposer
 import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Board
@@ -34,8 +37,18 @@ import com.aropi.app.R
 @Composable
 fun MainScreen(
     phraseManager: PhraseManager = remember { PhraseManager() },
-    composer: PhraseComposer = remember { MockComposer() }
+    composer: PhraseComposer? = null
 ) {
+    val localContext = LocalContext.current
+    val resolvedComposer: PhraseComposer = composer ?: remember {
+        try {
+            val repo = BundlePictogramRepository(BundleManager.get(localContext))
+            OnDeviceBundleComposer(repo, fallback = MockComposer())
+        } catch (e: Exception) {
+            Log.e("AroPi", "Falling back to MockComposer; bundle composer init failed", e)
+            MockComposer()
+        }
+    }
     Log.d("AroPi", "MainScreen composable started")
     
     val context = LocalContext.current
@@ -292,7 +305,7 @@ fun MainScreen(
                 currentLanguage = settings.language,
                 onClear = { phraseManager.clear() },
                 onSpeak = {
-                    val sentence = composer.compose(pictograms, settings.language)
+                    val sentence = resolvedComposer.compose(pictograms, settings.language)
                     ttsManager.speak(
                         sentence,
                         settings.language.locale,

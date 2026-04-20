@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Allow cleartext traffic to emulator/localhost during development.
+         LAN hosts (e.g. 192.168.x.x) are also allowed via the base-config
+         override; set user.backend_base_url in settings to target them. -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

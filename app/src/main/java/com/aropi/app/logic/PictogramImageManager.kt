@@ -47,35 +47,47 @@ class PictogramImageManager(private val context: Context) {
     }
     
     /**
-     * Get the file for a given filename.
+     * Get the file for a given path.
+     *
+     * Accepts either:
+     * - a filename relative to the internal `pictogram_images/` directory
+     *   (legacy, used for user-added custom pictograms), or
+     * - an absolute filesystem path (e.g. a PNG extracted from the
+     *   offline Aropi bundle under `filesDir/aropi/<version>/png/`).
      */
-    fun getImageFile(filename: String): File {
-        return File(imagesDir, filename)
+    fun getImageFile(pathOrFilename: String): File {
+        return if (pathOrFilename.startsWith("/")) {
+            File(pathOrFilename)
+        } else {
+            File(imagesDir, pathOrFilename)
+        }
     }
-    
+
     /**
      * Check if an image file exists.
      */
-    fun imageExists(filename: String): Boolean {
-        return getImageFile(filename).exists()
+    fun imageExists(pathOrFilename: String): Boolean {
+        return getImageFile(pathOrFilename).exists()
     }
-    
+
     /**
-     * Delete an image file.
+     * Delete an image file. Refuses to delete absolute paths (bundle
+     * assets are managed by [com.aropi.app.logic.bundle.BundleManager]).
      */
-    fun deleteImage(filename: String): Boolean {
+    fun deleteImage(pathOrFilename: String): Boolean {
+        if (pathOrFilename.startsWith("/")) return false
         return try {
-            getImageFile(filename).delete()
+            getImageFile(pathOrFilename).delete()
         } catch (e: Exception) {
             e.printStackTrace()
             false
         }
     }
-    
+
     /**
      * Get URI for an image file.
      */
-    fun getImageUri(filename: String): Uri {
-        return Uri.fromFile(getImageFile(filename))
+    fun getImageUri(pathOrFilename: String): Uri {
+        return Uri.fromFile(getImageFile(pathOrFilename))
     }
 }

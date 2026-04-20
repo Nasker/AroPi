@@ -73,6 +73,16 @@ dependencies {
     
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Networking (backend bundle updates + optional /compose fallback)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:2.11.0")
+
+    // Background bundle updater
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
+
     
     // Testing
     testImplementation(libs.junit)
