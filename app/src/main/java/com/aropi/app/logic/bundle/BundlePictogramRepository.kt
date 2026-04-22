@@ -1,5 +1,6 @@
 package com.aropi.app.logic.bundle
 
+import com.aropi.app.R
 import com.aropi.app.model.AppLanguage
 import com.aropi.app.model.Pictogram
 
@@ -41,7 +42,9 @@ class BundlePictogramRepository(private val bundle: BundleManager) {
                 list += Pictogram(
                     id = word,
                     labels = labels,
-                    iconRes = 0, // unused when customImagePath is set
+                    // Safe placeholder so PictogramCard's painterResource()
+                    // fallback never sees id=0.
+                    iconRes = R.drawable.ic_launcher_foreground,
                     grammarType = grammar,
                     customImagePath = imagePath
                 )

@@ -77,31 +77,37 @@ fun PictogramCard(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             // Icon takes most space, centered
-            if (pictogram.customImagePath != null && imageManager.imageExists(pictogram.customImagePath)) {
-                // Load custom image from internal storage
+            val iconModifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(bottom = if (showLabel) 4.dp else 0.dp)
+                .clip(RoundedCornerShape(8.dp))
+
+            // Guard: painterResource(0) throws Resources$NotFoundException, so
+            // we only pass a fallback/painter when the id is a real resource.
+            val hasValidIcon = pictogram.iconRes != 0
+            val hasCustomImage = pictogram.customImagePath != null &&
+                imageManager.imageExists(pictogram.customImagePath)
+
+            if (hasCustomImage) {
                 AsyncImage(
-                    model = imageManager.getImageFile(pictogram.customImagePath),
+                    model = imageManager.getImageFile(pictogram.customImagePath!!),
                     contentDescription = pictogram.getLabel(currentLanguage),
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .padding(bottom = if (showLabel) 4.dp else 0.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    fallback = painterResource(id = pictogram.iconRes)
+                    modifier = iconModifier,
+                    fallback = if (hasValidIcon) painterResource(id = pictogram.iconRes) else null
                 )
-            } else {
-                // Use default drawable resource
+            } else if (hasValidIcon) {
                 Image(
                     painter = painterResource(id = pictogram.iconRes),
                     contentDescription = pictogram.getLabel(currentLanguage),
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .padding(bottom = if (showLabel) 4.dp else 0.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                    modifier = iconModifier
                 )
+            } else {
+                // No image available at all — show an empty placeholder box so
+                // the card still renders instead of crashing.
+                Box(modifier = iconModifier)
             }
             
             // Label at bottom
